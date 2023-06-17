@@ -1,4 +1,4 @@
-package com.onwords.mqtt_test
+package com.onwords.smart_dashboard
 
 import io.flutter.embedding.android.FlutterActivity
 

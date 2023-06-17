@@ -6,7 +6,7 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 
 class MQTTClientManager {
   MqttServerClient client =
-  MqttServerClient.withPort('mqtt.onwordsapi.com', DateTime.now().millisecondsSinceEpoch.toString(), 1883);
+      MqttServerClient.withPort('mqtt.onwordsapi.com', DateTime.now().millisecondsSinceEpoch.toString(), 1883);
 
   Future<int> connect() async {
     client.logging(on: false);
@@ -16,8 +16,7 @@ class MQTTClientManager {
     client.onSubscribed = onSubscribed;
     client.pongCallback = pong;
 
-    final connMessage =
-    MqttConnectMessage().startClean().withWillQos(MqttQos.atLeastOnce);
+    final connMessage = MqttConnectMessage().startClean().withWillQos(MqttQos.atLeastOnce);
     client.connectionMessage = connMessage;
 
     try {
@@ -31,6 +30,21 @@ class MQTTClientManager {
     }
 
     return 0;
+  }
+
+  bool checkMqttConnection() {
+    try {
+      if (client.connectionStatus!.state == MqttConnectionState.connected) {
+        log('MQTT client is connected');
+        return true;
+      } else {
+        log('MQTT client is not connected');
+        return false;
+      }
+    } catch (e) {
+      log('Error from mqtt connection check $e');
+      return false;
+    }
   }
 
   void disconnect() {
@@ -72,7 +86,4 @@ class MQTTClientManager {
   Stream<List<MqttReceivedMessage<MqttMessage>>>? getMessagesStream() {
     return client.updates;
   }
-
-
-
 }
