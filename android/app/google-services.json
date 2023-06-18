@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "877385875738",
+    "project_id": "energy-dashboard-7203d",
+    "storage_bucket": "energy-dashboard-7203d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:877385875738:android:bc70604fb2b73c86156ca3",
+        "android_client_info": {
+          "package_name": "com.onwords.energy_dashboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "877385875738-bjejfr7tpaik8p5g3anecc6gku2hej14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBl0ecbySKi4pP4dgm6vlwkywmhkCMVRyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "877385875738-bjejfr7tpaik8p5g3anecc6gku2hej14.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

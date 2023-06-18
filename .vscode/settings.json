@@ -1,0 +1,5 @@
+{
+    "diffEditor.codeLens": true,
+    "editor.codeLens": true,
+    "dart.showTestCodeLens": true
+}

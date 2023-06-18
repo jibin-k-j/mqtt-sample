@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mqtt_test/home/models/light_model.dart';
 
 import '../../config/app_colors.dart';
 
 class LightButton extends StatelessWidget {
-  const LightButton({Key? key}) : super(key: key);
+  final LightModel lightModel;
+  const LightButton({Key? key, required this.lightModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class LightButton extends StatelessWidget {
           ),
           const SizedBox(width: 10.0),
           Text(
-            'Light',
+            lightModel.name,
             style: GoogleFonts.poppins(
               color: Colors.black,
               fontWeight: FontWeight.w600,
