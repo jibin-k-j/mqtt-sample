@@ -20,6 +20,7 @@ class FirebaseHomeOperation {
           );
         }
       });
+      lights.sort((a, b) => a.id.compareTo(b.id));
     } catch (e) {
       log('Error from getting all lights data $e');
     }
@@ -36,6 +37,8 @@ class FirebaseHomeOperation {
           meters.add(MeterInfoModel(name: meter.get('name'), meterId: meter.get('meterId')));
         }
       });
+
+      meters.sort((a, b) => a.meterId.compareTo(b.meterId));
     } catch (e) {
       log('Error from getting all meters data $e');
     }

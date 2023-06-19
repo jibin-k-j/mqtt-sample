@@ -48,7 +48,7 @@ class FirebaseOperations {
         // await credential.user!.sendEmailVerification();
 
         if (result) {
-          return credential;
+          return credential.user!.uid;
         } else {
           return 'er:/Unable to add user data. Try again!';
         }
@@ -74,13 +74,14 @@ class FirebaseOperations {
   }
 
   //RESET PASSWORD
-  static Future<bool> resetPassword({required String email}) async {
-    bool status = true;
+  static Future<dynamic> resetPassword({required String email}) async {
+    dynamic status = true;
     final auth = FirebaseAuth.instance;
-    await auth.sendPasswordResetEmail(email: email).catchError((e) {
-      log('error in pw reset $e');
-      status = false;
-    });
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      status = e.message.toString();
+    }
     return status;
   }
 

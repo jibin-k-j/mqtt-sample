@@ -13,6 +13,7 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final TextInputType? inputType;
   final TextCapitalization textCapitalization;
+  final Function(String)? onChanged;
 
   const CustomTextFormField(
       {Key? key,
@@ -25,6 +26,7 @@ class CustomTextFormField extends StatelessWidget {
       this.validator,
       this.onSaved,
       this.suffixIcon,
+      this.onChanged,
       required this.textFieldKey})
       : super(key: key);
 
@@ -36,6 +38,7 @@ class CustomTextFormField extends StatelessWidget {
       textInputAction: inputAction,
       keyboardType: inputType,
       textCapitalization: textCapitalization,
+      onChanged: onChanged,
       style: GoogleFonts.poppins(fontWeight: FontWeight.w500, color: Colors.white),
       validator: validator,
       onSaved: onSaved,

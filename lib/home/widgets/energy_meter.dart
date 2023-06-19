@@ -138,7 +138,7 @@ class EnergyMeter extends StatelessWidget {
                           Text('Voltage',
                               style: GoogleFonts.poppins(
                                   color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w600)),
-                          Text('${meterModel!.vAvg} V',
+                          Text('${meterModel!.vSum} V',
                               style: GoogleFonts.getFont(
                                 'Quantico',
                                 textStyle:
@@ -154,7 +154,7 @@ class EnergyMeter extends StatelessWidget {
                           Text('Current',
                               style: GoogleFonts.poppins(
                                   color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w600)),
-                          Text('${meterModel!.aAvg} A',
+                          Text('${meterModel!.aSum} A',
                               style: GoogleFonts.getFont(
                                 'Quantico',
                                 textStyle:
@@ -171,6 +171,22 @@ class EnergyMeter extends StatelessWidget {
                               style: GoogleFonts.poppins(
                                   color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w600)),
                           Text('${meterModel!.wAvg} W',
+                              style: GoogleFonts.getFont(
+                                'Quantico',
+                                textStyle:
+                                    const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w600),
+                              )),
+                        ],
+                      ),
+                      const SizedBox(height: 10.0),
+                      // wattage
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text('KWatt Hour',
+                              style: GoogleFonts.poppins(
+                                  color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w600)),
+                          Text('${(meterModel!.wh/1000).toStringAsFixed(2)} KWh',
                               style: GoogleFonts.getFont(
                                 'Quantico',
                                 textStyle:

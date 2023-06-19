@@ -52,20 +52,20 @@ class HomeViewModel {
           if (jsonData['data']['modbus'].first['voltage 1'].toString() != 'null') {
             // log('SUB MESSAGE JSON ${jsonData['data']['modbus'].first['voltage 1']}');
             final data = MeterModel(
-              meterId: jsonData['data']['modbus'].first['sid'].toString(),
-              voltage1: jsonData['data']['modbus'].first['voltage 1'],
-              voltage2: jsonData['data']['modbus'].first['voltage 2'],
-              voltage3: jsonData['data']['modbus'].first['voltage 3'],
-              current1: jsonData['data']['modbus'].first['current 1'],
-              current2: jsonData['data']['modbus'].first['current 2'],
-              current3: jsonData['data']['modbus'].first['current 3'],
-              vAvg: jsonData['data']['modbus'].first['Volts ave'],
-              vSum: jsonData['data']['modbus'].first['Volts Sum'],
-              aAvg: jsonData['data']['modbus'].first['Current Ave'],
-              aSum: jsonData['data']['modbus'].first['Current Sum'],
-              wAvg: jsonData['data']['modbus'].first['Watts Ave'],
-              wSum: jsonData['data']['modbus'].first['Watts Sum'],
-            );
+                meterId: jsonData['data']['modbus'].first['sid'].toString(),
+                voltage1: jsonData['data']['modbus'].first['voltage 1'],
+                voltage2: jsonData['data']['modbus'].first['voltage 2'],
+                voltage3: jsonData['data']['modbus'].first['voltage 3'],
+                current1: jsonData['data']['modbus'].first['current 1'],
+                current2: jsonData['data']['modbus'].first['current 2'],
+                current3: jsonData['data']['modbus'].first['current 3'],
+                vAvg: jsonData['data']['modbus'].first['Volts ave'],
+                vSum: jsonData['data']['modbus'].first['Volts Sum'],
+                aAvg: jsonData['data']['modbus'].first['Current Ave'],
+                aSum: jsonData['data']['modbus'].first['Current Sum'],
+                wAvg: jsonData['data']['modbus'].first['Watts Ave'],
+                wSum: jsonData['data']['modbus'].first['Watts Sum'],
+                wh: jsonData['data']['modbus'].first['WH Import']);
             provider.addMeterReading = data;
           }
         } else {
