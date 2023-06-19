@@ -51,9 +51,14 @@ class MQTTClientManager {
     client.disconnect();
   }
 
+  // Track subscribed topics
+  Set<String> subscribedTopics = <String>{};
+
   void subscribe(String topic) {
     if (client.connectionStatus!.state == MqttConnectionState.connected) {
-      client.subscribe(topic, MqttQos.atLeastOnce);
+      if (!subscribedTopics.contains(topic)) {
+        client.subscribe(topic, MqttQos.atLeastOnce);
+      }
     }
   }
 
@@ -66,6 +71,8 @@ class MQTTClientManager {
   }
 
   void onSubscribed(String topic) {
+    // Add the subscribed topic to the set
+    subscribedTopics.add(topic);
     log('MQTTClient::Subscribed to topic: $topic');
   }
 
@@ -79,7 +86,7 @@ class MQTTClientManager {
     log('MQTT START TO PUBLISH MESSAGE');
     if (client.connectionStatus!.state == MqttConnectionState.connected) {
       log('MQTT PUBLISHED MESSAGE TO $topic');
-      client.publishMessage(topic, MqttQos.exactlyOnce, builder.payload!);
+      client.publishMessage(topic, MqttQos.exactlyOnce, builder.payload!, retain: true);
     }
   }
 

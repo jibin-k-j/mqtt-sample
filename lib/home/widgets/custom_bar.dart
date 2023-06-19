@@ -27,7 +27,7 @@ class CustomBar extends StatelessWidget {
           width: MediaQuery.of(context).size.width * .6,
           child: SfLinearGauge(
             minimum: -1.5,
-            maximum: 64,
+            maximum: 100,
             showTicks: false,
             showAxisTrack: false,
             showLabels: false,

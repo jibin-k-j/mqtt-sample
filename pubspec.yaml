@@ -48,6 +48,9 @@ dependencies:
   shimmer_animation: ^2.1.0+1
   image_picker: ^0.8.7+4
   lottie: ^2.2.0
+  install_plugin_v2: ^1.0.0
+  permission_handler: ^10.3.0
+  path_provider:
 
 dev_dependencies:
   flutter_test:

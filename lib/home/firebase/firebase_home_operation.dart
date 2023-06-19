@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mqtt_test/home/models/light_model.dart';
 import 'package:mqtt_test/home/models/meter_info_model.dart';
@@ -12,7 +11,13 @@ class FirebaseHomeOperation {
     try {
       await ref.collection('devices').doc(userId).collection('lights').get().then((value) {
         for (var light in value.docs) {
-          lights.add(LightModel(name: light.get('name'), productId: light.get('productId'), id: light.get('id')));
+          lights.add(
+            LightModel(
+              name: light.get('name'),
+              productId: light.get('productId'),
+              id: light.get('id'),
+            ),
+          );
         }
       });
     } catch (e) {

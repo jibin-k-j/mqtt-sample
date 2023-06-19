@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_test/home/models/meter_model.dart';
+import 'package:mqtt_test/home/providers/light_provider.dart';
 import 'package:mqtt_test/util/mqtt_configuration.dart';
-
 import '../providers/meter_provider.dart';
 
 class HomeViewModel {
@@ -12,17 +12,32 @@ class HomeViewModel {
 //MQTT TOPICS
   String meterTopic = 'onwords/energymeter';
 
-  void initializeMQTT(MeterProvider meterProvider) async {
+  MQTTClientManager get getMqttManager => _mqttClientManager;
+
+  void initializeMQTT() async {
     await _mqttClientManager.connect();
+  }
+
+  void setupMeterMQTT(MeterProvider meterProvider) {
     _mqttClientManager.subscribe(meterTopic);
     setupUpdatesListener(meterTopic, meterProvider);
+  }
+
+  void setupLightMQTT(String topic, LightProvider lightProvider) {
+    _mqttClientManager.subscribe(topic);
+    setupUpdatesListener(topic, lightProvider);
+  }
+
+  void sendLightMQTTRequest(String topic) {
+    final data = jsonEncode({"request": "getCurrentStatus"});
+    _mqttClientManager.publishMessage(topic, data);
   }
 
   //CHECKING FOR MQTT CONNECTION STATUS
   bool isMQTTActive() => _mqttClientManager.checkMqttConnection();
 
   //STREAM LISTENER FOR MQTT
-  void setupUpdatesListener(String topic, MeterProvider meterProvider) {
+  void setupUpdatesListener(String topic, dynamic provider) {
     try {
       _mqttClientManager
           .getMessagesStream()!
@@ -32,24 +47,30 @@ class HomeViewModel {
         final result = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
         final jsonData = json.decode(result);
 
-        if (jsonData['data']['modbus'].first['voltage 1'].toString() != 'null') {
-          // log('SUB MESSAGE JSON ${jsonData['data']['modbus'].first['voltage 1']}');
-          final data = MeterModel(
-            meterId: jsonData['data']['mac'],
-            voltage1: jsonData['data']['modbus'].first['voltage 1'],
-            voltage2: jsonData['data']['modbus'].first['voltage 2'],
-            voltage3: jsonData['data']['modbus'].first['voltage 3'],
-            current1: jsonData['data']['modbus'].first['current 1'],
-            current2: jsonData['data']['modbus'].first['current 2'],
-            current3: jsonData['data']['modbus'].first['current 3'],
-            vAvg: jsonData['data']['modbus'].first['Volts ave'],
-            vSum: jsonData['data']['modbus'].first['Volts Sum'],
-            aAvg: jsonData['data']['modbus'].first['Current Ave'],
-            aSum: jsonData['data']['modbus'].first['Current Sum'],
-            wAvg: jsonData['data']['modbus'].first['Watts Ave'],
-            wSum: jsonData['data']['modbus'].first['Watts Sum'],
-          );
-          meterProvider.addMeterReading = data;
+        //for meter
+        if (topic == meterTopic) {
+          if (jsonData['data']['modbus'].first['voltage 1'].toString() != 'null') {
+            // log('SUB MESSAGE JSON ${jsonData['data']['modbus'].first['voltage 1']}');
+            final data = MeterModel(
+              meterId: jsonData['data']['modbus'].first['sid'].toString(),
+              voltage1: jsonData['data']['modbus'].first['voltage 1'],
+              voltage2: jsonData['data']['modbus'].first['voltage 2'],
+              voltage3: jsonData['data']['modbus'].first['voltage 3'],
+              current1: jsonData['data']['modbus'].first['current 1'],
+              current2: jsonData['data']['modbus'].first['current 2'],
+              current3: jsonData['data']['modbus'].first['current 3'],
+              vAvg: jsonData['data']['modbus'].first['Volts ave'],
+              vSum: jsonData['data']['modbus'].first['Volts Sum'],
+              aAvg: jsonData['data']['modbus'].first['Current Ave'],
+              aSum: jsonData['data']['modbus'].first['Current Sum'],
+              wAvg: jsonData['data']['modbus'].first['Watts Ave'],
+              wSum: jsonData['data']['modbus'].first['Watts Sum'],
+            );
+            provider.addMeterReading = data;
+          }
+        } else {
+          //for light
+          provider.setResponse = result;
         }
       });
     } catch (e) {

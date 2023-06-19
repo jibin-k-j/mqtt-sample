@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mqtt_test/auth/view_model/login_view_model.dart';
 import 'package:mqtt_test/home/providers/all_devices_provider.dart';
+import 'package:mqtt_test/home/providers/light_provider.dart';
 import 'package:mqtt_test/home/providers/meter_provider.dart';
 import 'package:mqtt_test/home/view/home_view.dart';
 import 'package:mqtt_test/user_landing.dart';
@@ -57,8 +58,10 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => MeterProvider()),
+        ChangeNotifierProvider(create: (_) => LightProvider()),
         ChangeNotifierProvider(create: (_) => LoginViewModel()),
         ChangeNotifierProvider(create: (_) => AllDevicesProvider()),
+
         ChangeNotifierProvider(create: (_) => userProvider),
       ],
       child: MaterialApp(
