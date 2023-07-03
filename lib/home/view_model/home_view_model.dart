@@ -10,7 +10,7 @@ class HomeViewModel {
   final MQTTClientManager _mqttClientManager = MQTTClientManager();
 
 //MQTT TOPICS
-  String meterTopic = 'onwords/energymeter';
+  String meterTopic = 'onwords/energymeterpkd001';
 
   MQTTClientManager get getMqttManager => _mqttClientManager;
 
